@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 }
 
 //DELETE DATA
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']);
 
