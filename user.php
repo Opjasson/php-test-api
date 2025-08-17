@@ -67,10 +67,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
         if ($conn->query($sql)) {
             echo json_encode(["status" => "succes", "message" => "user deleted"]);
-        }else{
+        } else {
             echo json_encode(["status" => "error", "message" => $conn->error]);
         }
-    }else{
+    } else {
         echo json_encode(["status" => "error", "message" => "Missing parameters"]);
     }
+}
+
+// HASH PASSWORD
+
+$password = "rahasia123";
+
+$hash = password_hash($password, PASSWORD_BCRYPT);
+
+echo "Password non hash : $password";
+echo "Password hash : $hash";
+
+if (password_verify("rahasia123", $hash)) {
+    echo "Password benar";
+} else {
+    echo "Password salah";
 }
