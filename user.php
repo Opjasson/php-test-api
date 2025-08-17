@@ -3,22 +3,38 @@ header("Content-Type:application/json");
 include 'db.php';
 
 
-//GET ALL DATA
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $sql = "SELECT * FROM users";
+// GET USER BY ID
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+
+    $sql = "SELECT * FROM users WHERE id=$id";
+
     $result = $conn->query($sql);
-
-    $users = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $users[] = $row;
-    }
 
     echo json_encode([
         "status" => "success",
-        "data" => $users
+        "data" => $result->fetch_assoc()
     ]);
+} else {
+    //GET ALL DATA
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+
+        $users = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+
+        echo json_encode([
+            "status" => "success",
+            "data" => $users
+        ]);
+    }
 }
+
+
 
 // POST DATA
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -74,6 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         echo json_encode(["status" => "error", "message" => "Missing parameters"]);
     }
 }
+
+
 
 // HASH PASSWORD
 
